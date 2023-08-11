@@ -22,9 +22,8 @@ class _SearchPageState extends State<SearchPage> {
             padding: const EdgeInsets.all(8.0),
             child: TextField(
               onChanged: (value) {
-                setState(() {
-                  _algoliaSearchProvider.search(value);
-                });
+                _algoliaSearchProvider.search(value);
+                setState(() {});
               },
               decoration: InputDecoration(
                 labelText: "Search",
@@ -40,7 +39,7 @@ class _SearchPageState extends State<SearchPage> {
           ),
           Expanded(
             child: FutureBuilder<List<AlgoliaObjectSnapshot>>(
-              future: _algoliaSearchProvider.getSearchResults(),
+              future: _algoliaSearchProvider.search(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(child: CircularProgressIndicator());
