@@ -5,17 +5,17 @@ class AlgoliaSearchProvider {
 
   AlgoliaSearchProvider()
       : _algoliaClient = Algolia.init(
-          applicationId: 'YourApplicationId',
-          apiKey: 'YourApiKey',
+          applicationId: EnvironmentConfig.ALGOLIA_APP_ID,
+          apiKey: EnvironmentConfig.ALGOLIA_API_KEY,
         );
 
   Future<List<AlgoliaObjectSnapshot>> search(String query, {int page = 0}) async {
     try {
-      final query = _algoliaClient.instance.index('YourIndexName').query(query);
+      final algoliaQuery = _algoliaClient.instance.index(EnvironmentConfig.ALGOLIA_INDEX_NAME).query(query);
       final response = await query.getObjects();
       return response.hits;
     } catch (e) {
-      throw Exception('Failed to perform search: $e');
+      throw Exception('Failed to perform search due to the following error: $e');
     }
   }
 }
